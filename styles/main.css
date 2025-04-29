@@ -1,0 +1,122 @@
+#personajeDiv{
+    width: 100%;
+    height: 650px;
+    display: none;
+    position: relative;
+    justify-content: center;
+    
+}
+#mainDiv{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    
+}
+body{
+    height: 98vb;
+    background: url("../img/Fondos/FondoInicio.webp") content-box no-repeat;
+    background-size: cover;
+}
+#seleccionPersonaje{
+    width: 70%;
+    height: 370px;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+#personaje1,#personaje2,#personaje3,#personaje4{
+    height: 100%;
+}
+#personaje1:hover,#personaje2:hover,#personaje3:hover,#personaje4:hover{
+    background-color: rgb(97, 85, 85);
+    cursor: pointer;
+}
+#botonMusica{
+    width: 5%;
+    position: absolute;
+    display: flex;
+    align-self: flex-end;
+    left: 0;
+}
+#botonMusica img{
+    width: 100%;
+}
+#botonMusica:hover{
+    opacity: 55%;
+    cursor:pointer;
+}
+
+#estadisticasDiv{
+    padding: 3px;
+    width: 80%;
+    height: 100px;
+    position: absolute;
+    display: flex;
+    align-self: flex-end;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;
+    justify-content: space-between;
+    bottom: -10%;
+}
+#estadisticasDiv p{
+    color: bisque;
+    font-size: xx-large;
+}
+#tiendaDiv{
+    width: 30%;
+    display: none;
+    position: absolute;
+    height: 650px;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;
+    left: 1%;
+    margin-bottom: 180px;
+}
+#tiendaDiv p{
+    color: bisque;
+    font-size: xx-large;
+}
+#imagenMoneda{
+    width: 10%;
+    height: 9%;
+    padding: 10px;
+}
+#inventarioDiv{
+    width: 30%;
+    display: none;
+    position: absolute;
+    height: 650px;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;
+    right: 1%;
+    margin-bottom: 180px;
+    flex-direction: column;
+}
+
+#inventarioDiv p{
+    padding-left: 5px;
+    color: bisque;
+    font-size: large;
+}
+.botonUsar{
+    margin-top: 3%;
+    margin-left: 5px;
+    background-color: yellow;
+    border: none;
+    font-size: x-large;
+    width: 20%;
+    height: 30px;
+}
+.botonUsar:hover{
+    background-color: rgb(144, 144, 14);
+    cursor: pointer;
+}
