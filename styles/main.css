@@ -29,6 +29,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-content: center;
+    z-index: 2;
 }
 #personaje1,#personaje2,#personaje3,#personaje4{
     height: 100%;
@@ -43,6 +44,7 @@ body{
     display: flex;
     align-self: flex-end;
     left: 0;
+    z-index: 2;
 }
 #botonMusica img{
     width: 100%;
@@ -79,8 +81,9 @@ body{
     border-radius: 5px;
     left: 1%;
     margin-bottom: 180px;
+    z-index: 2;
 }
-#tiendaDiv p{
+#tiendaDiv>p{
     color: bisque;
     font-size: xx-large;
 }
@@ -89,7 +92,7 @@ body{
     height: 9%;
     padding: 10px;
 }
-#inventarioDiv{
+#inventarioDiv {
     width: 30%;
     display: none;
     position: absolute;
@@ -100,23 +103,211 @@ body{
     right: 1%;
     margin-bottom: 180px;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden; 
+    padding: 15px; 
+    box-sizing: border-box; 
+    z-index: 2;
 }
 
 #inventarioDiv p{
     padding-left: 5px;
     color: bisque;
     font-size: large;
-}
-.botonUsar{
+    margin: 5px 0;
+}.botonUsar{
     margin-top: 3%;
     margin-left: 5px;
     background-color: yellow;
     border: none;
     font-size: x-large;
-    width: 20%;
+    width: 100%;
     height: 30px;
 }
 .botonUsar:hover{
     background-color: rgb(144, 144, 14);
     cursor: pointer;
+}
+.imagenComida{
+    width: 6%;
+}
+
+#expedicionDiv{
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    display: none;
+    z-index: 0;
+    justify-content: center;
+}
+#empezarExpedicion:hover{
+    background-color:rgb(78, 71, 71);
+    cursor: pointer;
+}
+#empezarExpedicion{
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;
+    width: 20%;
+    height: 10%;
+    display: flex;
+    align-self: flex-end;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+}
+#empezarExpedicion p{
+    color: bisque;
+    font-size: xx-large;
+    display: flex;
+}
+
+#expedionesDiv{
+    width: 70%;
+    margin-left: 5%;
+    height: 900px;
+    display: none;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;
+    flex-direction: column;
+    justify-content: space-around;
+    
+
+}
+#tituloExpediciones p{
+    color: bisque;
+    font-size: xx-large;
+    display: flex;
+    padding-left: 5px;
+
+}
+.niveles{
+    width: 97%;
+    height: 15%;
+    background-color: red;
+    display: flex;
+    margin-left: 2%;
+    position: relative;
+    justify-content: center;
+}
+.niveles p{
+    color: bisque;
+    font-size: xx-large;
+    display: flex;
+}
+#volverAtras p{
+    color: bisque;
+    font-size: xx-large;
+    display: flex;
+}
+
+#volverAtras{
+    width: 10%;
+    height: 10%;
+    display: none;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;    
+    margin-right: -10%;
+    padding-left: 2%;
+}
+#volverAtras:hover{
+    opacity: 80%;
+    cursor: pointer;
+}
+
+#nivel1{
+    background: url("../img/Fondos/nivel1.webp") center;
+}
+
+#nivel2{
+    background: url("../img/Fondos/nivel2.webp");
+}
+
+#nivel3{
+    background: url("../img/Fondos/nivel3.webp") center;
+}
+
+#nivel4{
+    background: url("../img/Fondos/nivel4.webp") center;
+}
+
+#nivel5{
+    background: url("../img/Fondos/nivel5.webp") center;
+}
+.niveles:hover{
+    opacity: 80%;
+    cursor: pointer;
+}
+#productosComprar{
+    width: 100%;
+    height: 85%;
+    bottom: 0;
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));  /*Lo he usado de mi anterior proyecto de la pagina de mosnter hunter */
+    grid-gap: 10px;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding: 10px;
+    align-items: center;
+    
+}
+.productos{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 70%;
+    background-color: rgba(17, 16, 16, 0.493);
+    border: 1px bisque solid;
+    border-radius: 5px;    
+    justify-content:  center;
+    align-content: flex-start;
+    text-align: center;
+}
+.productos img{
+    width: 90%;
+}
+.productos>p{
+    margin-top: 20%;
+    color: bisque;
+    font-size: x-large;
+}
+
+.botonComprar{
+    border-radius: 5px;    
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background-color: yellow;
+    border: none;
+    font-size: x-large;
+    width: 100%;
+    height: 40px;
+    padding-left:10%;
+    margin-top: auto;
+    display: flex;
+    justify-self: flex-end;
+}
+.botonComprar:hover{
+    background-color: rgb(144, 144, 14);
+    cursor: pointer;
+}
+#cargarPartida{
+    width: 50%;
+    height: 300px;
+    background-color: rgb(40, 36, 36);
+    border: 5px bisque solid;
+    border-radius: 5px;    
+    position: absolute;
+    align-self: flex-end;
+    text-align: center;
+}
+#cargarPartida:hover{
+    background-color: rgb(77, 69, 69);
+    cursor: pointer;
+}
+#cargarPartida p{
+    font-size: 90px;
+    color: bisque;
 }

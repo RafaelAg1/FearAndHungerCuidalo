@@ -24,6 +24,9 @@
                 <img src="img/Personajes/Ragnvaldr_portrait.webp" alt="">
             </div>
         </div>
+        <div id="cargarPartida">
+            <p>Cargar partida</p>
+        </div>
         <div id="personajeDiv">
             <img src="img/Personajes/Cahara_portrait.png" alt="" id="personajeSeleccionado">
             <div id="estadisticasDiv">
@@ -41,12 +44,90 @@
         <div id="tiendaDiv">
             <img src="img/icono.png" alt="" id="imagenMoneda">
             <p id="monedasJugador">Monedas: </p>
+            <div id="productosComprar">
+                <div class="productos">
+                    <img src="img/food/panmohoso.webp" alt="">
+                    <p id="tiendaPanMohoso" class="productoTexto">Hola</p>
+                    <button type="button" id="comprarPanMohoso" class="botonComprar">Comprar</button>
+                </div>
+                <div class="productos">
+                    <img src="img/food/carneseca.webp" alt="">
+                    <p id="tiendaCarneSeca" class="productoTexto">a</p>
+                    <button type="button" id="comprarCarneSeca" class="botonComprar">Comprar</button>
+                </div>
+                <div class="productos">
+                    <img src="img/food/vialazulwebp.webp" alt="">
+                    <p id="tiendaVialAzul" class="productoTexto"></p>
+                    <button type="button" id="comprarVialAzul" class="botonComprar">Comprar</button>
+                </div>
+                <div class="productos">
+                    <img src="img/food/botellawhiskywebp.webp" alt="">
+                    <p id="tiendaBotellaWhisky" class="productoTexto"></p>
+                    <button type="button" id="comprarBotellaWhisky" class="botonComprar">Comprar</button>
+                </div>
+                <div class="productos">
+                    <img src="img/food/pocioncuracion.webp" alt="">
+                    <p id="tiendaPocionCuracion" class="productoTexto"></p>
+                    <button type="button" id="comprarPocionCuracion" class="botonComprar">Comprar</button>
+                </div>
+            </div>
         </div>
         <div id="inventarioDiv">
+
             <p id="panMohosoInv">Pan mohoso: </p>
+            <img src="img/food/panmohoso.webp" alt="" class="imagenComida">
             <button type="button" id="usarPanMohoso" class="botonUsar">Usar</button>
-            <p id="panInv">Pan: </p>
-            <button type="button" id="usarPan" class="botonUsar">Usar</button>
+
+            <p id="carneSeca">Carne seca: </p>
+            <img src="img/food/carneseca.webp" alt="" class="imagenComida">
+            <button type="button" id="usarCarneSeca" class="botonUsar">Usar</button>
+            
+                    
+            <p id="vialAzul">Vial azul: </p>
+            <img src="img/food/vialazulwebp.webp" alt="" class="imagenComida">
+            <button type="button" id="usarVialAzul" class="botonUsar">Usar</button>
+            
+            <p id="botellaWhisky">Botella Whisky: </p>
+            <img src="img/food/botellawhiskywebp.webp" alt="" class="imagenComida">
+            <button type="button" id="usarBotellaWhisky" class="botonUsar">Usar</button>
+    
+            <p id="pocionCuracion">Pocion Curacion: </p>
+            <img src="img/food/pocioncuracion.webp" alt="" class="imagenComida">
+            <button type="button" id="usarPocionCuración" class="botonUsar">Usar</button>
+            
+            <p id="libroIluminacion">Libro iluminacion: </p>
+            <img src="img/libros/libroIluminado.webp" alt="" class="imagenComida">
+            <button type="button" id="usarLibroIluminacion" class="botonUsar">Usar</button>
+            
+            
+        </div>
+        <div id="expedicionDiv">
+            <div id="empezarExpedicion">
+                <p class="">Ir de expedicion</p>
+            </div>
+            <div id="expedionesDiv">
+                <div id="tituloExpediciones">
+                    <p>Expediciones. Selecciona el nivel que quieras explorar</p>
+                </div>
+                <div id="nivel1" class="niveles">
+                    <p>Nivel 1.Escaleras</p>
+                </div>
+                <div id="nivel2" class="niveles">
+                    <p>Nivel 2. Sotano</p>
+                </div>
+                <div id="nivel3" class="niveles">
+                    <p>Nivel 3. Carceles</p>
+                </div>
+                <div id="nivel4" class="niveles">
+                    <p>Nivel 4. Minas</p>
+                </div>
+                <div id="nivel5" class="niveles">
+                    <p>Nivel 5. ???</p>
+                </div>
+            </div>
+            <div id="volverAtras">
+                <p>Volver atras</p>
+            </div>
         </div>
     </div>
 </body>
