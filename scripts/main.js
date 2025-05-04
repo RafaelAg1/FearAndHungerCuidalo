@@ -36,8 +36,12 @@ const comprarCarneSeca = document.getElementById("comprarCarneSeca");
 const comprarVialAzul = document.getElementById("comprarVialAzul");
 const comprarBotellaWhisky = document.getElementById("comprarBotellaWhisky");
 const comprarPocionCuracion = document.getElementById("comprarPocionCuracion");
-
-
+//Expediciones
+const nivel1 = document.getElementById("nivel1");
+const nivel2 = document.getElementById("nivel2");
+const nivel3 = document.getElementById("nivel3");
+const nivel4 = document.getElementById("nivel4");
+const nivel5 = document.getElementById("nivel5");
 
 class Personajes {
     constructor(nombre,edad,hambre,miedo,salud,sueño){
@@ -50,7 +54,7 @@ class Personajes {
     }   
 }
 const jugador = {
-    oro:100,
+    oro:10,
     cantPanMohoso: 2,
     cantCarneSeca: 1,
     cantVialAzul: 0,
@@ -163,7 +167,6 @@ botonMusica.addEventListener("click",()=>{
 seleccionPersonajeCahara.addEventListener("click",()=>{
     haSeleccionado=true;
     personajeSeleccionado = Cahara;
-    imgPersonajeSeleccionado.src = "img/Personajes/Cahara_portrait.png";
     actualizarInterfaz();
     ost1.play();
     actualizarEstadisticas();
@@ -174,7 +177,6 @@ seleccionPersonajeCahara.addEventListener("click",()=>{
 seleccionPersonajeDarce.addEventListener("click",()=>{
     haSeleccionado=true;
     personajeSeleccionado = Darce;
-    imgPersonajeSeleccionado.src = "img/Personajes/D'arce_portrait.webp";
     actualizarInterfaz();
     ost1.play();
     actualizarEstadisticas();
@@ -185,7 +187,6 @@ seleccionPersonajeDarce.addEventListener("click",()=>{
 seleccionPersonajeEnki.addEventListener("click",()=>{
     haSeleccionado=true;
     personajeSeleccionado = Enki;
-    imgPersonajeSeleccionado.src = "img/Personajes/Enki_portrait.webp";
     actualizarInterfaz();
     ost1.play();
     actualizarEstadisticas();
@@ -197,7 +198,6 @@ seleccionPersonajeEnki.addEventListener("click",()=>{
 seleccionPersonajeRagnavaldr.addEventListener("click",()=>{
     haSeleccionado=true;
     personajeSeleccionado = Ragnvaldr;
-    imgPersonajeSeleccionado.src = "img/Personajes/Ragnvaldr_portrait.webp";
     actualizarInterfaz();
     ost1.play();
     actualizarEstadisticas();
@@ -221,6 +221,15 @@ function actualizarInterfaz (){
     document.getElementById("tiendaDiv").style.display="flex";
     document.getElementById("inventarioDiv").style.display="flex";
     expedicionDiv.style.display="flex";
+    if(personajeSeleccionado.nombre=="Cahara"){
+        imgPersonajeSeleccionado.src = "img/Personajes/Cahara_portrait.png";
+    }else if(personajeSeleccionado.nombre=="D'arce"){
+        imgPersonajeSeleccionado.src = "img/Personajes/D'arce_portrait.webp";
+    }else if(personajeSeleccionado.nombre=="Enki"){
+        imgPersonajeSeleccionado.src = "img/Personajes/Enki_portrait.webp";
+    }else if(personajeSeleccionado.nombre=="Ragnavaldr"){
+        imgPersonajeSeleccionado.src = "img/Personajes/Ragnvaldr_portrait.webp";
+    }
 }
 
 comprarPanMohoso.addEventListener("click",()=>{
@@ -384,11 +393,22 @@ function guardarJuego(){
 function cargarPartida(){
     const datosPersonaje = localStorage.getItem("personajeSeleccionado");
     const datosJugador = localStorage.getItem("datosJugador");
+    console.log(datosPersonaje);
+    console.log(JSON.parse(datosPersonaje));
     if(datosJugador && datosPersonaje){
         Object.assign(jugador,JSON.parse(datosJugador));
-        Object.assign(personajeSeleccionado,JSON.parse(datosPersonaje));
-        console.log(JSON.parse(datosJugador));
-        console.log(JSON.parse(datosPersonaje));
+        const datosPersonajeObj = JSON.parse(datosPersonaje);
+        personajeSeleccionado = new Personajes(
+            datosPersonajeObj.nombre,
+            datosPersonajeObj.edad,
+            datosPersonajeObj.hambre,
+            datosPersonajeObj.miedo,
+            datosPersonajeObj.salud,
+            datosPersonajeObj.sueño
+        );
+        actualizarInterfaz();
+        actualizarInventario();
+        actualizarEstadisticas();
     }
 }
 document.getElementById("cargarPartida").addEventListener("click",()=>{
@@ -412,7 +432,6 @@ function actualizarInventario(){
     document.getElementById("libroIluminacion").textContent = `${libroIluminado.nombre}. ${libroIluminado.descripcion} Cantidad: ${jugador.cantLibroIluminacion}`;
 
 }
-
 let intervaloJuego;
 intervaloJuego = setInterval(()=>{
     if(!expedicionIniciada){
@@ -440,3 +459,17 @@ intervaloJuego = setInterval(()=>{
         }
     }
 },5000);
+
+//EXPEDICIONES
+function nivelSeleccionado(){
+    document.getElementById("tituloExpediciones").style.display="none";
+    document.querySelectorAll(".niveles").forEach((nivel) => {
+        nivel.style.display = "none";
+    });
+}
+
+nivel1.addEventListener("click",()=>{
+    nivelSeleccionado();
+
+
+});
