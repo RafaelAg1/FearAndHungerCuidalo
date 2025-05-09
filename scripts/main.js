@@ -54,13 +54,13 @@ class Personajes {
     }   
 }
 const jugador = {
-    oro:10,
-    cantPanMohoso: 2,
-    cantCarneSeca: 1,
+    oro:0,
+    cantPanMohoso: 0,
+    cantCarneSeca: 0,
     cantVialAzul: 0,
     cantBotellaWhisky:0,
     cantPocionCuracion:0,
-    cantLibroIluminacion:1
+    cantLibroIluminacion:0
 }
 const objetosConsumibles = [
     {
@@ -93,6 +93,7 @@ const objetosConsumibles = [
         salud: 0,
         miedo: 30,
         precio: 20,
+        sueño:15 ,
         descripcion: "Una vieja botella de whisky. Te ayuda a mantener la miedo en la oscuridad."
     },
     {
@@ -105,40 +106,45 @@ const objetosConsumibles = [
     }
 ]
 const nivelesExpedicion = [
-    {
+    {   
+        id:1,
         nombre: "Nivel 1.Escaleras",
         desbloqueado: true,
         miedo: -10,
         oro: 15,
-        sueño: -10,
+        sueño: -5,
     },
     {
+        id:2,
         nombre: "Nivel 2.Sotano",
         desbloqueado: false,
         miedo: -20,
         oro: 30,
-        sueño: -20,
+        sueño: -10,
     },
     {
+        id:3,
         nombre: "Nivel 3.Carceles",
         desbloqueado: false,
         miedo: -35,
         oro: 50,
-        sueño: -35,
+        sueño: -25,
     },
     {
+        id:4,
         nombre: "Nivel 4.Minas",
         desbloqueado: false,
         miedo: -50,
         oro: 75,
-        sueño: -50,
+        sueño: -35,
     },
     {
+        id:5,
         nombre: "Nivel 5. ???",
         desbloqueado: false,
         miedo: -100,
         oro: 200,
-        sueño: -100,
+        sueño: -65,
     },
 ]
 
@@ -323,6 +329,11 @@ usarBotellaWhisky.addEventListener("click",()=>{
             personajeSeleccionado.miedo=100;
         }else{
             personajeSeleccionado.miedo+=objetosConsumibles[3].miedo;
+        }
+        if(personajeSeleccionado.sueño+objetosConsumibles[3].sueño>100){
+            personajeSeleccionado.sueño=100;
+        }else{
+            personajeSeleccionado.sueño+=objetosConsumibles[3].sueño;
 
         }
     }
@@ -433,6 +444,10 @@ function actualizarInventario(){
 
 }
 let intervaloJuego;
+let saludRestar=1;
+let hambreRestar=1;
+let hambreRestarMiedo=0;
+let hambreRestarSueño=0;
 intervaloJuego = setInterval(()=>{
     if(!expedicionIniciada){
         if(personajeSeleccionado){
@@ -440,36 +455,148 @@ intervaloJuego = setInterval(()=>{
                 alert("Se ha muerto. Fin de la partida");
                 clearInterval(intervaloJuego) //Sirve para detener el intervalo y pa poder hacerlo hace falta guardarlo en una variable el intervalo, sino no va
             }else{
+                if(personajeSeleccionado.miedo<70&&personajeSeleccionado.miedo>=50){
+                    hambreRestarMiedo++;
+                }else if(personajeSeleccionado.miedo>20&&personajeSeleccionado.miedo<50){
+                    hambreRestarMiedo+=2;
+                }else if(personajeSeleccionado.miedo<=20){
+                    hambreRestarMiedo+=3;
+                }else{
+                    hambreRestarMiedo=0;
+                }
+
+                if(personajeSeleccionado.sueño<70&&personajeSeleccionado.sueño>=50){
+                    hambreRestarSueño++;
+                }else if(personajeSeleccionado.sueño>20&&personajeSeleccionado.sueño<50){
+                    hambreRestarSueño+=2;
+                }else if(personajeSeleccionado.sueño<=20){
+                    hambreRestarSueño+=3;
+                }else{
+                    hambreRestarSueño=0;
+                }
+                console.log(hambreRestarMiedo);
+                console.log(hambreRestarSueño);
+                hambreRestar+=hambreRestarMiedo+hambreRestarSueño;
+                console.log(hambreRestar);
+
                 if(personajeSeleccionado.hambre>0){
                     if(personajeSeleccionado.nombre=="Ragnavaldr"){
-                        personajeSeleccionado.hambre-=2;
+                        hambreRestar++;
+                        personajeSeleccionado.hambre-=hambreRestar;
                     }else{
-                        personajeSeleccionado.hambre--;
+                        personajeSeleccionado.hambre-=hambreRestar;
                     }
                 }
                 if(personajeSeleccionado.hambre==0){
                     if(personajeSeleccionado.salud>0){
-                        personajeSeleccionado.salud--;
+                        personajeSeleccionado.salud-=saludRestar;
                     }
-    
-                }    
+                }
+                    
             }
-            
+            hambreRestar=1;
+            hambreRestarMiedo=0;
+            hambreRestarSueño=0;
             actualizarEstadisticas();
         }
     }
 },5000);
 
 //EXPEDICIONES
+function conseguirLibro(){
+    let numRandomLibro = Math.floor(Math.random() * 101);
+    if(numRandomLibro<5){   // 5%
+        jugador.cantLibroIluminacion++;
+        alert("HAS CONSEGUIDO UN LIBRO DE LA ILUMINACIÓN")
+        actualizarInventario();
+    }
+}
+
 function nivelSeleccionado(){
     document.getElementById("tituloExpediciones").style.display="none";
     document.querySelectorAll(".niveles").forEach((nivel) => {
         nivel.style.display = "none";
     });
+    document.getElementById("expedicionEnCurso").style.display="flex";
+    actualizarExpedicion();
+}
+function nivelTerminado(){
+    document.getElementById("tituloExpediciones").style.display="flex";
+    document.querySelectorAll(".niveles").forEach((nivel) => {
+        nivel.style.display = "flex"; 
+    });
+    document.getElementById("expedicionEnCurso").style.display="none";
+    conseguirLibro();
+}
+function completarNivel(nivelSel){
+    jugador.oro+=nivelSel.oro;
+    if(personajeSeleccionado.miedo+nivelSel.miedo<0){
+        personajeSeleccionado.miedo==0;
+    }else{
+        personajeSeleccionado.miedo+=nivelSel.miedo
+    }
+
+    if(personajeSeleccionado.sueño+nivelSel.sueño<0){
+        personajeSeleccionado.sueño==0
+    }else{
+        personajeSeleccionado.sueño+=nivelSel.sueño;
+    }
+    actualizarEstadisticas();
+
 }
 
 nivel1.addEventListener("click",()=>{
     nivelSeleccionado();
-
-
+    desbloquearNivel(nivelesExpedicion[1]);
+    completarNivel(nivelesExpedicion[0]);
 });
+nivel2.addEventListener("click",()=>{
+    if(nivelesExpedicion[1].desbloqueado==true){
+        nivelSeleccionado();
+        desbloquearNivel(nivelesExpedicion[2]);
+        completarNivel(nivelesExpedicion[1]);
+    }
+    
+});
+nivel3.addEventListener("click",()=>{
+    if(nivelesExpedicion[2].desbloqueado){
+        nivelSeleccionado();
+        desbloquearNivel(nivelesExpedicion[3]);
+        completarNivel(nivelesExpedicion[2]);
+    }
+    
+});
+nivel4.addEventListener("click",()=>{
+    if(nivelesExpedicion[3].desbloqueado){
+        nivelSeleccionado();
+        desbloquearNivel(nivelesExpedicion[4]);
+        completarNivel(nivelesExpedicion[3]);
+    }
+    
+});
+nivel5.addEventListener("click",()=>{
+    if(nivelesExpedicion[4].desbloqueado){
+        nivelSeleccionado();
+        completarNivel(nivelesExpedicion[4]);
+    }
+    
+});
+document.getElementById("terminarExpedicion").addEventListener("click",()=>{
+    nivelTerminado();
+});
+
+function desbloquearNivel(nivel){
+    nivel.desbloqueado=true;
+}
+
+
+function actualizarExpedicion(){
+    for(let nivel in nivelesExpedicion){
+        if (nivelesExpedicion[nivel].desbloqueado) {
+            const candado = document.getElementById(`bloqueado${parseInt(nivel) + 2}`);
+            if (candado) {
+                candado.style.display = "none";
+            }
+        }
+    }
+}
