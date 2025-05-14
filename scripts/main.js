@@ -474,10 +474,7 @@ intervaloJuego = setInterval(()=>{
                 }else{
                     hambreRestarSueño=0;
                 }
-                console.log(hambreRestarMiedo);
-                console.log(hambreRestarSueño);
                 hambreRestar+=hambreRestarMiedo+hambreRestarSueño;
-                console.log(hambreRestar);
 
                 if(personajeSeleccionado.hambre>0){
                     if(personajeSeleccionado.nombre=="Ragnavaldr"){
@@ -511,6 +508,14 @@ function conseguirLibro(){
         actualizarInventario();
     }
 }
+function eventoPocketCat(){
+    let numRandomEvento = Math.floor(Math.random() * 101);
+    if(numRandomEvento<100){   // 2%
+        alert("Evento pocketcat!");
+        
+    }
+}
+
 
 function nivelSeleccionado(){
     document.getElementById("tituloExpediciones").style.display="none";
@@ -526,18 +531,19 @@ function nivelTerminado(){
         nivel.style.display = "flex"; 
     });
     document.getElementById("expedicionEnCurso").style.display="none";
+    eventoPocketCat();
     conseguirLibro();
 }
 function completarNivel(nivelSel){
     jugador.oro+=nivelSel.oro;
     if(personajeSeleccionado.miedo+nivelSel.miedo<0){
-        personajeSeleccionado.miedo==0;
+        personajeSeleccionado.miedo=0;
     }else{
         personajeSeleccionado.miedo+=nivelSel.miedo
     }
 
     if(personajeSeleccionado.sueño+nivelSel.sueño<0){
-        personajeSeleccionado.sueño==0
+        personajeSeleccionado.sueño=0
     }else{
         personajeSeleccionado.sueño+=nivelSel.sueño;
     }
