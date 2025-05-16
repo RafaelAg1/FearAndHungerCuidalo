@@ -336,6 +336,7 @@ body{
     margin-bottom: 10px;
     text-align: center;
     align-content: center;
+    display: none;
 }
 #terminarExpedicion:hover{
     opacity: 80%;
@@ -348,12 +349,13 @@ body{
 #bloqueado2{
     display: flex;
 }
-#eventoPocketCat{
-    width: 100%;
-    height: 100%;
+#eventosExp{
+    margin-top: 3%;
+    width: 90%;
+    height: 80%;
     position: absolute;
-    background-color: rgb(130, 99, 99);
-    border: 5px bisque solid;
-    border-radius: 5px;    
-
+}
+#textoExp{
+    font-size: 40px;
+    color: bisque;
 }

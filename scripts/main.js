@@ -311,12 +311,21 @@ usarCarneSeca.addEventListener("click",()=>{
 usarVialAzul.addEventListener("click",()=>{
     if(jugador.cantVialAzul>0){
         jugador.cantVialAzul--;
-        ;
-        if(personajeSeleccionado.salud+objetosConsumibles[2].salud>100){
-            personajeSeleccionado.salud=100;
+        
+        if(personajeSeleccionado.nombre="Enki"){
+            if(personajeSeleccionado.salud+objetosConsumibles[2].salud>80){
+                personajeSeleccionado.salud=80;
+            }else{
+                personajeSeleccionado.salud+=objetosConsumibles[2].salud;
+            }
         }else{
-            personajeSeleccionado.salud+=objetosConsumibles[2].salud;
+            if(personajeSeleccionado.salud+objetosConsumibles[2].salud>100){
+                personajeSeleccionado.salud=100;
+            }else{
+                personajeSeleccionado.salud+=objetosConsumibles[2].salud;
+            }
         }
+        
     }
     actualizarEstadisticas();
     actualizarInventario();
@@ -484,7 +493,8 @@ intervaloJuego = setInterval(()=>{
                         personajeSeleccionado.hambre-=hambreRestar;
                     }
                 }
-                if(personajeSeleccionado.hambre==0){
+                if(personajeSeleccionado.hambre<=0){
+                    personajeSeleccionado.hambre=0;
                     if(personajeSeleccionado.salud>0){
                         personajeSeleccionado.salud-=saludRestar;
                     }
@@ -497,7 +507,7 @@ intervaloJuego = setInterval(()=>{
             actualizarEstadisticas();
         }
     }
-},5000);
+},1000);
 
 //EXPEDICIONES
 function conseguirLibro(){
@@ -508,14 +518,6 @@ function conseguirLibro(){
         actualizarInventario();
     }
 }
-function eventoPocketCat(){
-    let numRandomEvento = Math.floor(Math.random() * 101);
-    if(numRandomEvento<100){   // 2%
-        alert("Evento pocketcat!");
-        
-    }
-}
-
 
 function nivelSeleccionado(){
     document.getElementById("tituloExpediciones").style.display="none";
@@ -531,6 +533,8 @@ function nivelTerminado(){
         nivel.style.display = "flex"; 
     });
     document.getElementById("expedicionEnCurso").style.display="none";
+    contador=0;
+    textoExp.innerHTML = ``;
     eventoPocketCat();
     conseguirLibro();
 }
@@ -606,3 +610,27 @@ function actualizarExpedicion(){
         }
     }
 }
+const textoExp = document.getElementById("textoExp");
+const eventosExpedicion = [`El jugador esta explorando el nivel seleccionado.`,
+    `El jugador ha encontrado gran cantidad de enemigos pero los ha evadido`,
+    `El jugador ha sido atacado por una trampa, aunque ha evadido el ataque, la cordura le esta consumiendo!`,
+    `El jugador ha evitado un ataque con todas sus fuerzas, se encuentra más cansado`,
+    `El jugador encuentra finalmente un tesoro, ha conseguido un poquito de oro`
+]
+let contador=0;
+function completarExpedicion(){
+    if(contador<5){
+        textoExp.innerHTML += (`${eventosExpedicion[contador]}<br>`)
+        document.getElementById("terminarExpedicion").style.display=`none`;
+    }
+    if(contador==5){
+        document.getElementById("terminarExpedicion").style.display=`flex`;
+    }
+    contador++;
+}
+
+setInterval(()=>{
+    if(expedicionIniciada){
+        completarExpedicion();
+    }
+},3000)
