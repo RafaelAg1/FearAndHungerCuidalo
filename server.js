@@ -5,9 +5,7 @@ const app = express();
 require('dotenv').config();
 
 app.use(express.json());
-app.use(cors({
-    origin: 'https://rafaelag1.github.io'
-}));
+app.use(cors());
 
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('✅ Conectado a MongoDB'))
@@ -60,4 +58,5 @@ app.get('/load/:nombreJugador', async (req, res) => {
     
     res.json(progreso);
 });
-app.listen(3000, () => console.log('Servidor en http://localhost:3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
