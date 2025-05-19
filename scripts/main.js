@@ -43,7 +43,7 @@ const nivel2 = document.getElementById("nivel2");
 const nivel3 = document.getElementById("nivel3");
 const nivel4 = document.getElementById("nivel4");
 const nivel5 = document.getElementById("nivel5");
-
+//Clase personajke
 class Personajes {
     constructor(nombre,edad,hambre,miedo,salud,sueño){
         this.nombre = nombre;
@@ -54,6 +54,7 @@ class Personajes {
         this.sueño = sueño
     }   
 }
+//Objeto jugador
 const jugador = {
     oro:0,
     cantPanMohoso: 0,
@@ -63,6 +64,7 @@ const jugador = {
     cantPocionCuracion:0,
     cantLibroIluminacion:1
 }
+//Objetos consumibles
 const objetosConsumibles = [
     {
         nombre: "Pan mohoso",
@@ -106,6 +108,7 @@ const objetosConsumibles = [
         descripcion: "Extraña poción  de curacion"
     }
 ]
+//Niveles expedicion
 const nivelesExpedicion = [
     {   
         id:1,
@@ -512,7 +515,6 @@ function nivelTerminado(){
     document.getElementById("expedicionEnCurso").style.display="none";
     contador=0;
     textoExp.innerHTML = ``; 
-    eventoPocketCat();
     conseguirLibro();
 }
 function completarNivel(nivelSel){
