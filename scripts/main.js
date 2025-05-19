@@ -1,5 +1,6 @@
 let personajeSeleccionado;
 let haSeleccionado=false;
+let nombreJugador;
 let expedicionIniciada=false;
 const seleccionPersonajeCahara = document.getElementById("personaje1");
 const seleccionPersonajeDarce = document.getElementById("personaje2");
@@ -175,9 +176,9 @@ seleccionPersonajeCahara.addEventListener("click",()=>{
     personajeSeleccionado = Cahara;
     actualizarInterfaz();
     ost1.play();
+    nombreJugador= prompt("Introduce el nombre del jugador");
     actualizarEstadisticas();
     actualizarInventario();
-    guardarJuego();
 });
 
 seleccionPersonajeDarce.addEventListener("click",()=>{
@@ -185,9 +186,9 @@ seleccionPersonajeDarce.addEventListener("click",()=>{
     personajeSeleccionado = Darce;
     actualizarInterfaz();
     ost1.play();
+    nombreJugador= prompt("Introduce el nombre del jugador");
     actualizarEstadisticas();
     actualizarInventario();    
-    guardarJuego();
 });
 
 seleccionPersonajeEnki.addEventListener("click",()=>{
@@ -195,9 +196,9 @@ seleccionPersonajeEnki.addEventListener("click",()=>{
     personajeSeleccionado = Enki;
     actualizarInterfaz();
     ost1.play();
+    nombreJugador= prompt("Introduce el nombre del jugador");
     actualizarEstadisticas();
     actualizarInventario();    
-    guardarJuego();
 
 });
 
@@ -206,9 +207,9 @@ seleccionPersonajeRagnavaldr.addEventListener("click",()=>{
     personajeSeleccionado = Ragnvaldr;
     actualizarInterfaz();
     ost1.play();
+    nombreJugador= prompt("Introduce el nombre del jugador");
     actualizarEstadisticas();
     actualizarInventario();    
-    guardarJuego();
 });
 function actualizarTienda(){
     document.getElementById("tiendaPanMohoso").textContent = `${objetosConsumibles[0].nombre}. Precio: ${objetosConsumibles[0].precio}`
@@ -403,38 +404,12 @@ volverAtras.addEventListener("click",()=>{
 });
 
 function guardarJuego(){
-    const personajeSel = JSON.stringify(personajeSeleccionado);
-    const jugadorDatos = JSON.stringify(jugador);
-    localStorage.setItem("personajeSeleccionado",personajeSel);
-    localStorage.setItem("datosJugador",jugadorDatos);
-    console.log(localStorage.getItem("personajeSeleccionado"));
-    console.log(localStorage.getItem("datosJugador"));
-
     guardarServidor();
 }
-function cargarPartida(){
-    const datosPersonaje = localStorage.getItem("personajeSeleccionado");
-    const datosJugador = localStorage.getItem("datosJugador");
-    console.log(datosPersonaje);
-    console.log(JSON.parse(datosPersonaje));
-    if(datosJugador && datosPersonaje){
-        Object.assign(jugador,JSON.parse(datosJugador));
-        const datosPersonajeObj = JSON.parse(datosPersonaje);
-        personajeSeleccionado = new Personajes(
-            datosPersonajeObj.nombre,
-            datosPersonajeObj.edad,
-            datosPersonajeObj.hambre,
-            datosPersonajeObj.miedo,
-            datosPersonajeObj.salud,
-            datosPersonajeObj.sueño
-        );
-        actualizarInterfaz();
-        actualizarInventario();
-        actualizarEstadisticas();
-    }
-}
+
 document.getElementById("cargarPartida").addEventListener("click",()=>{
-    cargarPartida();
+    nombreJugador= prompt("Introduce el nombre del jugador");
+    cargarServidor(nombreJugador);
 });
 function actualizarEstadisticas(){
     nombrePersonaje.textContent = `Nombre: ${personajeSeleccionado.nombre}`;
@@ -635,17 +610,48 @@ setInterval(()=>{
     if(expedicionIniciada){
         completarExpedicion();
     }
-},3000)
+},1500)
 function guardarServidor(){
-    fetch('https://localhost:3000/save',{
+    const data = {
+        nombreJugador,
+        personajeSeleccionado,
+        jugador,
+        nivelesExpedicion,
+    };
+
+    fetch('http://localhost:3000/save',{
         method:'POST',
         headers:{
             'Content-Type':'application/json'
         },
-        body:JSON.stringify(jugador),
-        body:JSON.stringify(personajeSeleccionado)
-    }).then(response => response.json()).then(data=>{
+        body:JSON.stringify(data)
+    }).then(response => response.json())
+      .then(data=>{
         console.log("Progreso guardado",data)
-        alert("FUCIONA")
+        alert("Se han guardado los datos con exito")
     })
 }
+function cargarServidor(nombre){
+    nombreJugador = nombre;
+    fetch(`http://localhost:3000/load/${nombreJugador}`)
+    .then(response => response.json())
+    .then(data => {
+        
+        personajeSeleccionado = new Personajes(
+        data.personajeSeleccionado.nombre,
+        data.personajeSeleccionado.edad,
+        data.personajeSeleccionado.hambre,
+        data.personajeSeleccionado.miedo,
+        data.personajeSeleccionado.salud,
+        data.personajeSeleccionado.sueño
+    )
+    Object.assign(jugador,data.jugador);
+    nivelesExpedicion.splice(0, nivelesExpedicion.length, ...data.nivelesExpedicion);
+
+    console.log('Progreso cargado:', jugador);
+    actualizarInterfaz();
+    actualizarInventario();
+    actualizarEstadisticas();
+
+    });
+};
