@@ -60,7 +60,7 @@ const jugador = {
     cantVialAzul: 0,
     cantBotellaWhisky:0,
     cantPocionCuracion:0,
-    cantLibroIluminacion:0
+    cantLibroIluminacion:1
 }
 const objetosConsumibles = [
     {
@@ -409,6 +409,8 @@ function guardarJuego(){
     localStorage.setItem("datosJugador",jugadorDatos);
     console.log(localStorage.getItem("personajeSeleccionado"));
     console.log(localStorage.getItem("datosJugador"));
+
+    guardarServidor();
 }
 function cargarPartida(){
     const datosPersonaje = localStorage.getItem("personajeSeleccionado");
@@ -534,7 +536,7 @@ function nivelTerminado(){
     });
     document.getElementById("expedicionEnCurso").style.display="none";
     contador=0;
-    textoExp.innerHTML = ``;
+    textoExp.innerHTML = ``; 
     eventoPocketCat();
     conseguirLibro();
 }
@@ -634,3 +636,16 @@ setInterval(()=>{
         completarExpedicion();
     }
 },3000)
+function guardarServidor(){
+    fetch('https://localhost:3000/save',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(jugador),
+        body:JSON.stringify(personajeSeleccionado)
+    }).then(response => response.json()).then(data=>{
+        console.log("Progreso guardado",data)
+        alert("FUCIONA")
+    })
+}
