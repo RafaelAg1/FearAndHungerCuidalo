@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect('mongodb+srv://agrafa08:yph06gWVmRQSZHXA@juego.wymcndn.mongodb.net/?retryWrites=true&w=majority&appName=Juego')
+mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('✅ Conectado a MongoDB'))
     .catch(err => console.error('❌ Error de conexión:', err));
     const ProgresoPrueba = new mongoose.Schema({
