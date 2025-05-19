@@ -652,6 +652,5 @@ function cargarServidor(nombre){
     actualizarInterfaz();
     actualizarInventario();
     actualizarEstadisticas();
-
     });
 };
