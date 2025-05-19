@@ -621,7 +621,7 @@ function guardarServidor(){
         nivelesExpedicion,
     };
 
-    fetch('http://fearandhungercuidalo-production.up.railway.app/save',{
+    fetch('https://fearandhungercuidalo-production.up.railway.app/save',{
         method:'POST',
         headers:{
             'Content-Type':'application/json'
@@ -635,7 +635,7 @@ function guardarServidor(){
 }
 function cargarServidor(nombre){
     nombreJugador = nombre;
-    fetch(`http://fearandhungercuidalo-production.up.railway.app/load/${nombreJugador}`)
+    fetch(`https://fearandhungercuidalo-production.up.railway.app/load/${nombreJugador}`)
     .then(response => response.json())
     .then(data => {
         
